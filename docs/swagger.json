@@ -1,0 +1,212 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Newsletter API",
+        "title": "Newsletter API",
+        "contact": {
+            "name": "Grupo MContigo"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/subscriptions": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Read subscriptions",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "example": 1,
+                        "description": "Result page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "example": 10,
+                        "description": "Max page size",
+                        "name": "maxPageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "1",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "1",
+                        "description": "Blog ID",
+                        "name": "blogId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": "[\"tech\",\"sports\"]",
+                        "description": "Interests",
+                        "name": "interests",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/handler.ResponseDoc"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create subscriptions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Create subscriptions",
+                "parameters": [
+                    {
+                        "description": "create subscriptions",
+                        "name": "Subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/newsletter.Subscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.FilterDoc": {
+            "type": "object",
+            "properties": {
+                "blogId": {
+                    "type": "string",
+                    "example": "b4f2e2d9-e399-46d0-a458-ef75527896c1"
+                },
+                "interests": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "tech",
+                        "sports"
+                    ]
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "e020e7f8-79e6-4d16-80ce-7cbf86cefe1f"
+                }
+            }
+        },
+        "handler.PaginationDoc": {
+            "type": "object",
+            "properties": {
+                "maxPageSize": {
+                    "type": "integer"
+                },
+                "numberOfPages": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "paginationString": {
+                    "type": "string",
+                    "example": "1/1"
+                },
+                "totalElements": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.ResponseDoc": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/handler.FilterDoc"
+                },
+                "pagination": {
+                    "$ref": "#/definitions/handler.PaginationDoc"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handler.ResultsDoc"
+                    }
+                }
+            }
+        },
+        "handler.ResultsDoc": {
+            "type": "object",
+            "properties": {
+                "blogId": {
+                    "type": "string",
+                    "example": "b4f2e2d9-e399-46d0-a458-ef75527896c1"
+                },
+                "interests": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "tech",
+                        "sports"
+                    ]
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "e020e7f8-79e6-4d16-80ce-7cbf86cefe1f"
+                }
+            }
+        },
+        "newsletter.Subscription": {
+            "type": "object",
+            "properties": {
+                "blogID": {
+                    "type": "string"
+                },
+                "interests": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
